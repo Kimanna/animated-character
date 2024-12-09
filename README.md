@@ -1,1 +1,0 @@
-# animated-follow-mouse-cursor
