@@ -1,13 +1,40 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + TS</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animated Follow Mouse Cursor</title>
+  <script type="module" src="src/main.ts" defer></script> 
+</head>
+<body>
+	<div class="container">
+		<div id="character-container"></div> <!-- SVG가 로드될 컨테이너 -->
+
+		<!-- 표정 버튼 -->
+		<div class="expression-buttons">
+			<button id="btn-default">기본 표정</button>
+			<button id="btn-smile">웃는 표정</button>
+			<button id="btn-sad">슬픈 표정</button>
+			<button id="btn-wink">윙크</button>
+		</div>
+
+		<!-- 동작 버튼 -->
+		<div class="action-buttons">
+			<button id="btn-nod" data-action="NOD">끄덕</button>
+			<button id="btn-shake" data-action="SHAKE">흔들기</button>
+			<button id="btn-tilt" data-action="TILT">갸우뚱</button>
+			<button id="btn-bow" data-action="BOW">인사</button>
+			<button id="btn-look-up" data-action="LOOK_UP">하늘 보기</button>
+		</div>
+
+		<!-- 방향 버튼 -->
+		<div class="direction-buttons">
+			<button id="btn-up" data-direction="UP">위쪽</button>
+			<button id="btn-down" data-direction="DOWN">아래쪽</button>
+			<button id="btn-left" data-direction="LEFT">왼쪽</button>
+			<button id="btn-right" data-direction="RIGHT">오른쪽</button>
+			<button id="btn-front" data-direction="FRONT">정면</button>
+		</div>
+	</div>
+</body>
 </html>

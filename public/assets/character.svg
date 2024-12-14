@@ -1,0 +1,68 @@
+<svg id="character" height="100px" width="100px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+     viewBox="0 0 512 512" xml:space="preserve">
+  <!-- 얼굴 컬러 -->
+  <circle style="fill:#F7B239;" cx="256" cy="256" r="246"/>
+  
+  <!-- 얼굴 외곽선 -->
+  <circle cx="256" cy="256" r="250" fill="none" stroke="black" stroke-width="12"/>
+  
+  <!-- 눈 영역 -->
+  <g class="eyes-area">
+    <!-- 기본 눈 -->
+    <g class="eyes default-expression show" data-expression="DEFAULT">
+      <circle cx="363" cy="250" r="54" stroke="black" stroke-width="12"/>
+      <circle cx="148" cy="250" r="54" stroke="black" stroke-width="12"/>
+    </g>
+    
+    <!-- 웃는 눈 -->
+    <g class="eyes smile-expression hide" data-expression="SMILE">
+      <path d="M94 250 Q148 190 202 250 M309 250 Q363 190 417 250" stroke="black" stroke-width="12" fill="none"/>
+    </g>
+    
+    <!-- 슬픈 눈 -->
+    <g class="eyes sad-expression hide" data-expression="SAD">
+      <path d="M94 250 Q148 270 202 250 M309 250 Q363 270 417 250" stroke="black" stroke-width="12" fill="none"/>
+    </g>
+    
+    <!-- 윙크하는 눈 -->
+    <g class="eyes wink-expression hide" data-expression="WINK">
+      <path d="M94 250 Q148 190 202 250 M280 250 Q363 190 420 250 M280 250 Q350 140 420 200" stroke="black" stroke-width="12" fill="none"/>
+    </g>
+  </g>
+
+  <!-- 눈동자 -->
+  <g class="eyeballs show">
+    <circle style="fill:#FFFFFF;" cx="363" cy="235" r="20"/>
+    <circle style="fill:#FFFFFF;" cx="148" cy="235" r="20"/>
+  </g>
+
+  <!-- 볼터치 -->
+  <g class="blusher">
+    <circle style="fill:#F95428;" cx="100" cy="337" r="24"/>
+    <circle style="fill:#F95428;" cx="411" cy="337" r="24"/>
+  </g>
+  
+  <!-- 입 영역 -->
+  <g class="mouth-area">
+    <!-- 기본 입 -->
+    <g class="mouth default-expression show" data-expression="DEFAULT">
+      <path d="M216,318 C 216,348 256,348 256,318" stroke="black" fill="transparent" stroke-width="12"/>
+      <path d="M256,318 C 256,348 296,348 296,318" stroke="black" fill="transparent" stroke-width="12"/>
+    </g>
+    
+    <!-- 웃는 입 -->
+    <g class="mouth smile-expression hide" data-expression="SMILE">
+      <path d="M216,318 C 216,380 296,380 296,318" stroke="black" fill="transparent" stroke-width="12"/>
+    </g>
+    
+    <!-- 슬픈 입 -->
+    <g class="mouth sad-expression hide" data-expression="SAD">
+      <path d="M216,338 C 216,308 296,308 296,338" stroke="black" fill="transparent" stroke-width="12"/>
+    </g>
+    
+    <!-- 윙크하는 입 -->
+    <g class="mouth wink-expression hide" data-expression="WINK">
+      <path d="M216,318 C 216,348 296,348 296,318" stroke="black" fill="transparent" stroke-width="12"/>
+    </g>
+  </g>
+</svg>

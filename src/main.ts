@@ -1,24 +1,31 @@
-import "./style.css";
-import typescriptLogo from "./typescript.svg";
-import viteLogo from "/vite.svg";
+// 캐릭터 스타일 적용 - 테스트용 추후 빌드시 import 가이드 제시 예정
+import './styles/character.css';
 
-const appElement = document.querySelector<HTMLDivElement>("#app");
-if (appElement) {
-  appElement.innerHTML = `
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
-  </div>
-  `;
-}
+import { Character } from './index';
+import { CharacterController } from './controllers/CharacterController';
+import { Direction, Action } from './core/types';
+
+
+// 생성 시 크기 지정
+const character = new Character('character-container', {
+  width: 200,
+  height: 200
+});
+
+await character.initialize('/assets/character.svg');
+
+// 나중에 크기 변경
+character.setSize(200, 200);
+
+
+// 캐릭터 컨트롤러 초기화
+const characterController = new CharacterController('character-container');
+characterController.initializeEvents();
+characterController.performAction(Action.NOD, {
+  speed: 1.5,      // 1.5배 빠르게
+  repeat: 3        // 3회 반복
+});
+characterController.setDirection(Direction.DOWN, {
+  duration: 1000,
+  repeat: 1
+});

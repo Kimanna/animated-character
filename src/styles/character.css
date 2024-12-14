@@ -1,0 +1,152 @@
+body {
+  background-color: #000;
+}
+
+#svg-container {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.character-container {
+  transform-style: preserve-3d;
+}
+
+.eyes-area,
+.eyeballs,
+.blusher,
+.mouth-area {
+  transform-origin: 50% 50% -200px;
+  transition-duration: 0.3s;
+}
+
+.hide {
+  visibility: hidden;
+}
+
+.show {
+  visibility: visible;
+}
+
+.expression-buttons, 
+.action-buttons,
+.direction-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.expression-buttons button, 
+.action-buttons button,
+.direction-buttons button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.expression-buttons button {
+  background-color: #F95428;
+}
+
+.action-buttons button {
+  background-color: #F7B239;
+}
+
+.direction-buttons button {
+  background-color: #45a049;
+}
+
+.expression-buttons button:hover {
+  background-color: #c04928;
+}
+
+.action-buttons button:hover {
+  background-color: #c48f34;
+}
+
+.direction-buttons button:hover {
+  background-color: #2e7a32;
+}
+
+
+
+.up .eyes-area,
+.up .eyeballs,
+.up .blusher,
+.up .mouth-area {
+  transform: rotate3d(1, 0, 0, 30deg);
+}
+
+.down .eyes-area,
+.down .eyeballs,
+.down .blusher,
+.down .mouth-area {
+  transform: rotate3d(1, 0, 0, -30deg);
+}
+
+.left .eyes-area,
+.left .eyeballs,
+.left .blusher,
+.left .mouth-area {
+  transform: rotate3d(0, 1, 0, -30deg);
+}
+
+.right .eyes-area,
+.right .eyeballs,
+.right .blusher,
+.right .mouth-area {
+  transform: rotate3d(0, 1, 0, 30deg);
+}
+
+.front .eyes-area,
+.front .eyeballs,
+.front .blusher,
+.front .mouth-area {
+  transform: rotate3d(0, 0, 0, 0deg);
+}
+
+.nod .eyes-area,
+.nod .eyeballs,
+.nod .blusher,
+.nod .mouth-area {
+    transform: rotate3d(1, 0, 0, 30deg);
+}
+
+.shake .eyes-area,
+.shake .eyeballs,
+.shake .blusher,
+.shake .mouth-area {
+  transform: rotate3d(1, 0, 0, 30deg);
+}
+
+.tilt .eyes-area,
+.tilt .eyeballs,
+.tilt .blusher,
+.tilt .mouth-area {
+  transform: rotate3d(1, 0, 0, 30deg);
+}
+
+.bow .eyes-area,
+.bow .eyeballs,
+.bow .blusher,
+.bow .mouth-area {
+  transform: rotate3d(1, 0, 0, 30deg);
+}
+
+.look-up .eyes-area,
+.look-up .eyeballs,
+.look-up .blusher,
+.look-up .mouth-area {
+  transform: rotate3d(1, 0, 0, 30deg);
+}
