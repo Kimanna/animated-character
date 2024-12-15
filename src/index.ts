@@ -1,2 +1,3 @@
-export { Character } from './components/Character';
-export { FaceExpression, Direction, Action } from './core/types';
+export { Character } from './controllers/Character';
+export { FaceExpression, Direction } from './core/types';
+export type { AnimationType } from './core/types';

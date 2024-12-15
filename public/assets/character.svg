@@ -31,7 +31,7 @@
   </g>
 
   <!-- 눈동자 -->
-  <g class="eyeballs show">
+  <g class="eyeballs default-expression show" data-expression="DEFAULT">
     <circle style="fill:#FFFFFF;" cx="363" cy="235" r="20"/>
     <circle style="fill:#FFFFFF;" cx="148" cy="235" r="20"/>
   </g>

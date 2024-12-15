@@ -3,20 +3,20 @@
  * @property width - 캐릭터의 너비
  * @property height - 캐릭터의 높이
  */
-export type CharacterSize = {
-  width: number;
-  height: number;
-};
+export interface CharacterOptions {
+  width?: number;
+  height?: number;
+}
 
 /**
  * 지원되는 얼굴 표정 타입
  * @enum {string}
  */
 export enum FaceExpression {
-  DEFAULT = "DEFAULT",
-  SMILE = "SMILE",
-  SAD = "SAD",
-  WINK = "WINK"
+  DEFAULT = "default",
+  SMILE = "smile",
+  SAD = "sad",
+  WINK = "wink"
 }
 
 /**
@@ -24,31 +24,40 @@ export enum FaceExpression {
  * @enum {string}
  */
 export enum Direction {
-  UP = "UP",
-  DOWN = "DOWN",
-  LEFT = "LEFT",
-  RIGHT = "RIGHT",
-  FRONT = "FRONT"
+  UP = "up",
+  DOWN = "down",
+  LEFT = "left",
+  RIGHT = "right",
+  FRONT = "front"
 }
 
 /**
  * 캐릭터 동작
  * @enum {string}
  */
-export enum Action {
-  NOD = "NOD",
-  SHAKE = "SHAKE",
-  TILT = "TILT",
-  BOW = "BOW",
-  LOOK_UP = "LOOK_UP"
+export type AnimationType = 'follow_mouse' | 'direction';
+
+/**
+ * 애니메이션 설정
+ * @interface
+ */
+export interface AnimationConfig {
+  direction?: string | Direction;
+  duration?: number;
+  repeat?: number;
+  speed?: number;
 }
 
-export type DirectionOptions = {
-  duration: number;     // 해당 방향 유지 시간 (ms)
-  repeat: number;       // 반복 횟수
-};
 
-export type ActionOptions = {
-  speed: number;        // 동작 속도
-  repeat: number;       // 반복 횟수
-};
+/**
+ * SVG 요소들의 참조를 저장하는 인터페이스
+ */
+export interface FaceElements {
+  svgElement: SVGSVGElement | null;
+  eyesArea: SVGGElement | null;
+  blusher: SVGGElement | null;
+  mouthArea: SVGGElement | null;
+  eyes: SVGGElement | null;
+  eyeballs: SVGGElement | null;
+  [key: string]: SVGElement | null;
+}

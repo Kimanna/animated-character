@@ -2,37 +2,72 @@
 import './styles/character.css';
 
 import { Character } from './index';
-import { CharacterController } from './controllers/CharacterController';
-import { Direction, Action } from './core/types';
 
 
-// 생성 시 크기 지정
+
 const character = new Character('character-container', {
   width: 200,
-  height: 200
+  height: 200,
 });
 
-await character.initialize('/assets/character.svg');
+await character.initialize();
 
-// 나중에 크기 변경
-character.setSize(200, 200);
+character.changeAnimation("follow_mouse");
+character.changeFaceExpression("default");
+character.animationPlay();
 
-// mouse follow on/off
-character.setMouseFollow(true);
+// 이벤트 관련 메서드
+function initializeEvents(): void {
+    // 표정 변경 버튼들에 이벤트 리스너 추가
+    const btnDefault = document.getElementById('btn-default');
+    const btnSmile = document.getElementById('btn-smile');
+    const btnSad = document.getElementById('btn-sad');
+    const btnWink = document.getElementById('btn-wink');
 
-setTimeout(() => {
-  character.setMouseFollow(false);
-}, 5000);
+    const btnNod = document.getElementById('btn-nod');
+    const btnShake = document.getElementById('btn-shake');
+    const btnTilt = document.getElementById('btn-tilt');
+    const btnBow = document.getElementById('btn-bow');
+    const btnLookUp = document.getElementById('btn-look-up');
 
+    const btnPlay = document.getElementById('btn-play');
+    const btnStop = document.getElementById('btn-stop');
 
-// 캐릭터 컨트롤러 초기화
-const characterController = new CharacterController('character-container');
-characterController.initializeEvents();
-characterController.performAction(Action.NOD, {
-  speed: 1.5,      // 1.5배 빠르게
-  repeat: 3        // 3회 반복
-});
-characterController.setDirection(Direction.DOWN, {
-  duration: 1000,
-  repeat: 1
-});
+    if (btnDefault) {
+      btnDefault.addEventListener('click', () => character.changeFaceExpression("default"));
+    }
+    if (btnSmile) {
+      btnSmile.addEventListener('click', () => character.changeFaceExpression("smile"));
+    }
+    if (btnSad) {
+      btnSad.addEventListener('click', () => character.changeFaceExpression("sad"));
+    }
+    if (btnWink) {
+      btnWink.addEventListener('click', () => character.changeFaceExpression("wink"));
+    }
+
+    if (btnNod) {
+      btnNod.addEventListener('click', () => character.changeAnimation("nod"));
+    }
+    if (btnShake) {
+      btnShake.addEventListener('click', () => character.changeAnimation("shake"));
+    }
+    if (btnTilt) {
+      btnTilt.addEventListener('click', () => character.changeAnimation("tilt"));
+    }
+    if (btnBow) {
+      btnBow.addEventListener('click', () => character.changeAnimation("bow"));
+    } 
+    if (btnLookUp) {
+      btnLookUp.addEventListener('click', () => character.changeAnimation("look_up"));
+    }
+
+    if (btnPlay) {
+      btnPlay.addEventListener('click', () => character.animationPlay());
+    }
+    if (btnStop) {
+      btnStop.addEventListener('click', () => character.animationStop());
+    }
+  }   
+
+  initializeEvents();
