@@ -80,4 +80,12 @@ export class Character {
       height: this.svgElement.height.baseVal.value
     };
   }
+
+  setMouseFollow(isFollow: boolean): void {
+    if (isFollow) {
+      this.faceAnimation.toggleMouseTracking(true);
+    } else {
+      this.faceAnimation.toggleMouseTracking(false);
+    }
+  }
 }

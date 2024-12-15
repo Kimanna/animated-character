@@ -17,6 +17,13 @@ await character.initialize('/assets/character.svg');
 // 나중에 크기 변경
 character.setSize(200, 200);
 
+// mouse follow on/off
+character.setMouseFollow(true);
+
+setTimeout(() => {
+  character.setMouseFollow(false);
+}, 5000);
+
 
 // 캐릭터 컨트롤러 초기화
 const characterController = new CharacterController('character-container');

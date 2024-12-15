@@ -17,10 +17,13 @@ interface FaceElements {
 export class FaceAnimation {
   private container: HTMLElement;
   private elements: FaceElements;
+  private boundHandleMouseMove: (event: MouseEvent) => void;
+  private isTracking: boolean = false;
 
   constructor(container: HTMLElement) {
     this.container = container;
     this.elements = this.getInitialElements();
+    this.boundHandleMouseMove = this.handleMouseMove.bind(this);
   }    
 
   // 초기화 관련 메서드
@@ -49,8 +52,6 @@ export class FaceAnimation {
   // 이벤트 관련 메서드
   public initializeEvents(): void {
     this.elements = this.initializeElements();
-    document.addEventListener('mousemove', this.handleMouseMove.bind(this));
-    
     // 표정 변경 버튼들에 이벤트 리스너 추가
     const btnDefault = document.getElementById('btn-default');
     const btnSmile = document.getElementById('btn-smile');
@@ -70,6 +71,19 @@ export class FaceAnimation {
       btnWink.addEventListener('click', () => this.updateFaceExpression(FaceExpression.WINK));
     }
   }     
+
+  private addMouseMoveEvent(): void {
+    if (this.isTracking) {
+      document.addEventListener('mousemove', this.boundHandleMouseMove);
+    } else {
+      document.removeEventListener('mousemove', this.boundHandleMouseMove);
+    }
+  }
+
+  public toggleMouseTracking(isTracking: boolean): void {
+    this.isTracking = isTracking;
+    this.addMouseMoveEvent();
+  }
 
   // 얼굴 회전 관련 메서드
   private calculateFaceRotation(centerX: number, centerY: number, mouseX: number, mouseY: number): string {
