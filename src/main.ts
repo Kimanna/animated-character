@@ -10,9 +10,16 @@ const character = new Character('character-container', {
   height: 200,
 });
 
-await character.initialize();
+let config = {
+  direction: "up",
+  duration: 5000,
+  repeat: 3,
+  speed: 3,
+}
 
-character.changeAnimation("follow_mouse");
+await character.initialize();
+character.changeAnimation("direction", config);
+character.setAnimation("follow_mouse");
 character.changeFaceExpression("default");
 character.animationPlay();
 
@@ -63,11 +70,47 @@ function initializeEvents(): void {
     }
 
     if (btnPlay) {
-      btnPlay.addEventListener('click', () => character.animationPlay());
+      btnPlay.addEventListener('click', () => {
+        character.changeAnimation("direction", config);
+        character.animationPlay();
+      });
     }
     if (btnStop) {
-      btnStop.addEventListener('click', () => character.animationStop());
+      btnStop.addEventListener('click', () => {
+        character.animationStop();
+      });
     }
-  }   
+
+    const directionButtons = document.querySelectorAll('[data-direction]');
+    directionButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const direction = (button as HTMLElement).dataset.direction;
+            config.direction = direction!;
+            character.changeAnimation("direction", config);
+                character.animationPlay();
+        });  
+    });
+
+    const durationInput = document.getElementById('duration-input') as HTMLInputElement;
+    if (durationInput) {
+        durationInput.addEventListener('change', (e) => {
+            config.duration = parseInt((e.target as HTMLInputElement).value);
+        });
+    }
+
+    const repeatInput = document.getElementById('repeat-input') as HTMLInputElement;
+    if (repeatInput) {
+        repeatInput.addEventListener('change', (e) => {
+            config.repeat = parseInt((e.target as HTMLInputElement).value);
+        });
+    }
+
+    const speedInput = document.getElementById('speed-input') as HTMLInputElement;
+    if (speedInput) {
+        speedInput.addEventListener('change', (e) => {
+            config.speed = parseFloat((e.target as HTMLInputElement).value);
+        });
+    }
+}
 
   initializeEvents();

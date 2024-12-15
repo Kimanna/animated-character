@@ -1,35 +1,20 @@
 import { DEFAULT_ANIMATION_CONFIG } from "../core/constants";
-import { AnimationConfig, Direction, FaceElements } from "../core/types";
+import { AnimationConfig, FaceElements } from "../core/types";
 
 export class CharacterAnimation {
     private container: HTMLElement;
     private animationConfig: AnimationConfig | undefined;
     private elements: FaceElements;
+    private currentAnimations: Animation[] = [];
 
     constructor(container: HTMLElement, elements: FaceElements) {
         this.container = container;
         this.elements = elements;
-        this.init()
     }
 
-    private init(): void {
-        const directionButtons = document.querySelectorAll('[data-direction]');
-        directionButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const direction = (button as HTMLElement).dataset.direction;
-        console.log('Clicked direction:', direction);
-        if (direction && direction in Direction) {
-
-        } else {
-          console.error('Invalid direction:', direction);
-        }
-      });
-    });    
-}
-
     public setAnimation(config?: AnimationConfig): void {
+        this.stop();
         this.animationConfig = { ...DEFAULT_ANIMATION_CONFIG, ...config };
-
         this.clearCurrentAnimation();
         this.applyAnimation();
     }
@@ -39,55 +24,70 @@ export class CharacterAnimation {
         if (!direction) return;
 
         const lowerCaseDirection = direction.toLowerCase();
-        const elements = this.container.querySelectorAll('.eyes-area, .eyeballs, .blusher, .mouth-area');
         
-        // 기존 방향 클래스들 제거
-        const directions = [lowerCaseDirection];
-        elements.forEach(element => {
-          directions.forEach(dir => element.classList.remove(dir));
-        });
-      
-        // 새로운 방향 클래스 추가
-        elements.forEach(element => {
-          element.classList.add(lowerCaseDirection);
-        });
+        const targetElements = [
+            this.elements.eyesArea,
+            this.elements.eyeballs,
+            this.elements.blusher,
+            this.elements.mouthArea
+        ].filter(element => element !== null) as SVGElement[];
+        
+        const rotate3dValues = {
+            up: 'rotate3d(1, 0, 0, 30deg)',
+            down: 'rotate3d(1, 0, 0, -30deg)',
+            left: 'rotate3d(0, 1, 0, -30deg)',
+            right: 'rotate3d(0, 1, 0, 30deg)',
+            front: 'rotate3d(0, 0, 0, 0deg)'
+        };
 
-        
-        
-        if (this.animationConfig?.repeat && this.animationConfig.repeat > 1) {
-          let count = 0;
-          const interval = setInterval(() => {
-            elements.forEach(element => {
-              element.classList.remove(lowerCaseDirection);
-              setTimeout(() => {
-                element.classList.add(lowerCaseDirection);
-              }, 100);
+        const rotateValue = rotate3dValues[lowerCaseDirection as keyof typeof rotate3dValues];
+        const duration = (this.animationConfig?.duration || 1000) / (this.animationConfig?.speed || 1);
+        const repeat = this.animationConfig?.repeat || 1;
+
+        // 기존 애니메이션 정리
+        this.currentAnimations.forEach(anim => anim.cancel());
+        this.currentAnimations = [];
+
+        targetElements.forEach(element => {
+            const animation = element.animate([
+                { transform: rotateValue },
+            ], {
+                duration: duration,
+                iterations: repeat,
+                easing: 'ease-in-out'
             });
-            
-            count++;
-            if (count >= (this.animationConfig?.repeat || 1)) {
-              clearInterval(interval);
-              setTimeout(() => {
-                elements.forEach(element => {
-                  element.classList.remove(lowerCaseDirection);
-                  element.classList.add(direction.toLowerCase());
-                });
-              }, this.animationConfig?.duration || 1000);
+
+            animation.onfinish = () => {
+                element.style.transform = '';
+                if (this.currentAnimations.every(anim => anim.playState === 'finished')) {
+                    this.stop();
+                }
+            };
+
+            this.currentAnimations.push(animation);
+        });
+    }
+
+    public stop(): void {
+        this.currentAnimations.forEach(animation => {
+            animation.cancel();
+        });
+        this.currentAnimations = [];
+
+        // 각 요소의 transform 초기화
+        [
+            this.elements.eyesArea,
+            this.elements.eyeballs,
+            this.elements.blusher,
+            this.elements.mouthArea
+        ].forEach(element => {
+            if (element) {
+                element.style.transform = '';
             }
-          }, this.animationConfig?.duration || 1000);
-        } else {
-          setTimeout(() => {
-            elements.forEach(element => {
-              element.classList.remove(lowerCaseDirection);
-              element.classList.add(direction.toLowerCase());
-            });
-          }, this.animationConfig?.duration || 1000);
-        }
+        });
     }
 
     private clearCurrentAnimation(): void {
-        this.container.classList.remove('direction');
+        this.stop();
     }
-
-
 }

@@ -21,7 +21,6 @@ export class Character {
   private characterAnimation: CharacterAnimation | undefined;
   private animationType: AnimationType = "follow_mouse";
   private animationConfig: AnimationConfig | undefined;
-  private isPlaying: boolean = false;
   private chracterSize: CharacterOptions = { width: 200, height: 200 };
   private faceElements!: FaceElements;
   /**
@@ -91,20 +90,19 @@ export class Character {
   }
 
   public animationPlay(): void {
-    this.isPlaying = true;
-
     switch(this.animationType) {
       case 'direction':
+        this.faceAnimation?.setTracking(false);
         this.characterAnimation?.setAnimation(this.animationConfig);
         break;
       case 'follow_mouse':
+        this.characterAnimation?.stop();
         this.faceAnimation?.setTracking(true);
         break;
     }
   }
 
   public animationStop(): void {
-    this.isPlaying = false;
     switch(this.animationType) {
       case 'direction':
         this.characterAnimation?.stop();
