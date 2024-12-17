@@ -7,7 +7,7 @@
   <circle cx="256" cy="256" r="250" fill="none" stroke="black" stroke-width="12"/>
   
   <!-- 눈 영역 -->
-  <g class="eyes-area">
+  <g class="eyes-area" data-moving-area="eyes">
     <!-- 기본 눈 -->
     <g class="eyes default-expression show" data-expression="DEFAULT">
       <circle cx="363" cy="250" r="54" stroke="black" stroke-width="12"/>
@@ -31,19 +31,19 @@
   </g>
 
   <!-- 눈동자 -->
-  <g class="eyeballs default-expression show" data-expression="DEFAULT">
+  <g class="eyeballs default-expression show" data-moving-area="eyeballs" data-expression="DEFAULT">
     <circle style="fill:#FFFFFF;" cx="363" cy="235" r="20"/>
     <circle style="fill:#FFFFFF;" cx="148" cy="235" r="20"/>
   </g>
 
   <!-- 볼터치 -->
-  <g class="blusher">
+  <g class="blusher" data-moving-area="blusher">
     <circle style="fill:#F95428;" cx="100" cy="337" r="24"/>
     <circle style="fill:#F95428;" cx="411" cy="337" r="24"/>
   </g>
   
   <!-- 입 영역 -->
-  <g class="mouth-area">
+  <g class="mouth-area" data-moving-area="mouth">
     <!-- 기본 입 -->
     <g class="mouth default-expression show" data-expression="DEFAULT">
       <path d="M216,318 C 216,348 256,348 256,318" stroke="black" fill="transparent" stroke-width="12"/>

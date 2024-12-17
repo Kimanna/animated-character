@@ -113,38 +113,3 @@ body {
 .front .mouth-area {
   transform: rotate3d(0, 0, 0, 0deg);
 }
-
-.nod .eyes-area,
-.nod .eyeballs,
-.nod .blusher,
-.nod .mouth-area {
-    transform: rotate3d(1, 0, 0, 30deg);
-}
-
-.shake .eyes-area,
-.shake .eyeballs,
-.shake .blusher,
-.shake .mouth-area {
-  transform: rotate3d(1, 0, 0, 30deg);
-}
-
-.tilt .eyes-area,
-.tilt .eyeballs,
-.tilt .blusher,
-.tilt .mouth-area {
-  transform: rotate3d(1, 0, 0, 30deg);
-}
-
-.bow .eyes-area,
-.bow .eyeballs,
-.bow .blusher,
-.bow .mouth-area {
-  transform: rotate3d(1, 0, 0, 30deg);
-}
-
-.look-up .eyes-area,
-.look-up .eyeballs,
-.look-up .blusher,
-.look-up .mouth-area {
-  transform: rotate3d(1, 0, 0, 30deg);
-}
