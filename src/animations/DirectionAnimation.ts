@@ -41,8 +41,6 @@ export class DirectionAnimation {
         const repeat = this.animationConfig?.repeat || 1;
         const pause = this.animationConfig?.pause || 0;
 
-        console.log('direction:', direction);
-
         // 기존 애니메이션 정리
         this.currentAnimations.forEach(anim => anim.cancel());
         this.currentAnimations = [];

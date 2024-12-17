@@ -4,10 +4,12 @@ import { calculateFaceRotation } from '../core/utils/rotationCalculator';
 export class FaceAnimation {
   private container: HTMLElement;
   private boundHandleMouseMove: (event: MouseEvent) => void;
+  private boundSetCenterFace: () => void;
 
   constructor(container: HTMLElement) {
     this.container = container;
     this.boundHandleMouseMove = this.handleMouseMove.bind(this);
+    this.boundSetCenterFace = this.setCenterFace.bind(this);
   }    
 
   public updateFaceExpression(expression: FaceExpression): void {
@@ -27,8 +29,10 @@ export class FaceAnimation {
   public setTracking(isTracking: boolean): void {
     if (isTracking) {
       document.addEventListener('mousemove', this.boundHandleMouseMove);
+      document.addEventListener('mouseout', this.boundSetCenterFace);
     } else {
       document.removeEventListener('mousemove', this.boundHandleMouseMove);
+      document.removeEventListener('mouseout', this.boundSetCenterFace);
     }
   } 
 
@@ -54,6 +58,15 @@ export class FaceAnimation {
     allElements.forEach((element) => {
       if (element instanceof HTMLElement || element instanceof SVGElement) {
         element.style.transform = rotationValue;
+      }
+    });
+  }
+
+  private setCenterFace(): void {
+    const allElements = this.container.querySelectorAll('[data-moving-area]');
+    allElements.forEach((element) => {
+      if (element instanceof HTMLElement || element instanceof SVGElement) {
+        element.style.transform = 'none';
       }
     });
   }
