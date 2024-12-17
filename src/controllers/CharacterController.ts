@@ -8,8 +8,8 @@ export class CharacterController {
         this.character = new Character(containerId, options);
     }
 
-    public async initialize(): Promise<void> {
-        await this.character.initialize();
+    public initialize(): void {
+        this.character.initialize();
     }
 
     public handleAnimationChange(type: AnimationType, config?: AnimationConfig): void {

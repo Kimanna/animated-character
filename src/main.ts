@@ -14,7 +14,7 @@ const config = {
   pause: 3000,
 }
 
-await character.initialize();
+character.initialize();
 character.handleAnimationChange("direction");
 character.handleFaceExpressionChange("default");
 // character.handleAnimationPlay();

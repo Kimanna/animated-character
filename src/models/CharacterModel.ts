@@ -20,8 +20,8 @@ export class Character {
         this.directionAnimation = new DirectionAnimation(container);
     }
 
-    public async initialize(): Promise<void> {
-        await this.characterService.initialize();
+    public initialize(): void {
+        this.characterService.initialize();
     }
 
     public setAnimation(type: AnimationType, config?: AnimationConfig): void {

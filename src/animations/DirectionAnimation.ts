@@ -1,4 +1,4 @@
-import { DEFAULT_ANIMATION_CONFIG, ROTATION_VALUES } from "../core/constants/animation";
+import { DEFAULT_ANIMATION_CONFIG, ROTATION_VALUES } from "../core/constants/animation.ts";
 import { AnimationConfig } from "../core/types/animation.ts";
 
 export class DirectionAnimation {
