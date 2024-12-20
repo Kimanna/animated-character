@@ -1,3 +1,4 @@
+import { EYE_EXPRESSIONS, MOUTH_EXPRESSIONS } from '../core/constants/character.ts';
 import { FaceExpression } from '../core/types/character.ts';
 import { calculateFaceRotation } from '../core/utils/rotationCalculator';
 
@@ -13,17 +14,74 @@ export class FaceAnimation {
   }    
 
   public updateFaceExpression(expression: FaceExpression): void {
-    const allExpressions = this.container.querySelectorAll('[data-expression]');
-    allExpressions.forEach(elem => {
-      elem.classList.remove('show');
-      elem.classList.add('hide');
-    });
+    this.updateEyeExpression(expression);
+    this.updateMouthExpression(expression);
+  }
 
-    const selectedElements = this.container.querySelectorAll(`.${expression.toLowerCase()}-expression`);
-    selectedElements.forEach(elem => {
-      elem.classList.remove('hide');
-      elem.classList.add('show');
+  private createSVGElement(
+    tagName: string,
+    attributes: Record<string, string | number>
+  ): SVGElement {
+    const element = document.createElementNS("http://www.w3.org/2000/svg", tagName);
+    Object.entries(attributes).forEach(([key, value]) => {
+      element.setAttribute(key, value.toString());
     });
+    return element;
+  }
+
+  private createExpressionGroup(type: 'eyes' | 'mouth'): SVGGElement {
+    const group = this.createSVGElement('g', {
+      class: `${type}`,
+    }) as SVGGElement;
+
+    return group;
+  }
+
+  private createPathElement(pathData: string): SVGPathElement {
+    return this.createSVGElement('path', {
+      d: pathData,
+      stroke: 'black',
+      fill: 'transparent',
+      'stroke-width': 12,
+    }) as SVGPathElement;
+  }
+
+  private updateEyeExpression(expression: FaceExpression): void {
+    const area = this.container.querySelector('.eyes-area');
+    if (!area) return;
+
+    area.textContent = ''; // 기존 요소 제거
+    const group = this.createExpressionGroup('eyes');
+
+    // 눈동자 표시/숨김 처리
+    const eyeballs = this.container.querySelector('.eyeballs');
+    if (eyeballs instanceof SVGElement) {     
+      eyeballs.style.visibility = expression === 'default' ? 'visible' : 'hidden';
+    }
+
+    if (expression === 'default') {
+      EYE_EXPRESSIONS.default.forEach(({ type: elemType, attrs }) => {
+        group.appendChild(this.createSVGElement(elemType, attrs));
+      });
+    } else {
+      const pathData = EYE_EXPRESSIONS[expression];
+      group.appendChild(this.createPathElement(pathData as string));
+    }
+
+    area.appendChild(group);
+  }
+
+  private updateMouthExpression(expression: FaceExpression): void {
+    const area = this.container.querySelector('.mouth-area');
+    if (!area) return;
+
+    area.textContent = ''; // 기존 요소 제거
+    const group = this.createExpressionGroup('mouth');
+    
+    const pathData = MOUTH_EXPRESSIONS[expression];
+    group.appendChild(this.createPathElement(pathData as string));
+    
+    area.appendChild(group);
   }
 
   public setTracking(isTracking: boolean): void {

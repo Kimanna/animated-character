@@ -40,14 +40,10 @@ export class Character {
         
         switch(this.animationType) {
             case 'direction':
-                setTimeout(() => {
-                    this.directionAnimation.setAnimation(this.animationConfig);
-                }, 100);
+                this.directionAnimation.setAnimation(this.animationConfig);
                 break;
             case 'follow_mouse':
-                setTimeout(() => {
-                    this.faceAnimation.setTracking(true);
-                }, 100);
+                this.faceAnimation.setTracking(true);
                 break;
         }
     }
@@ -55,5 +51,9 @@ export class Character {
     public stop(): void {
         this.faceAnimation.setTracking(false);
         this.directionAnimation.stop();
+    }
+
+    public setSize(options: CharacterOptions): void {
+        this.characterService.updateCharacterSize(options);
     }
 }

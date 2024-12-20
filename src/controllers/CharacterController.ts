@@ -1,5 +1,6 @@
 import { Character } from '../models/CharacterModel';
 import { AnimationConfig, AnimationType } from '../core/types/animation';
+import { CharacterOptions, FaceExpression } from '../core/types/character';
 
 export class CharacterController {
     private character: Character;
@@ -16,7 +17,7 @@ export class CharacterController {
         this.character.setAnimation(type, config);
     }
 
-    public handleFaceExpressionChange(expression: string): void {
+    public handleFaceExpressionChange(expression: FaceExpression): void {
         this.character.setFaceExpression(expression);
     }
 
@@ -26,5 +27,9 @@ export class CharacterController {
 
     public handleAnimationStop(): void {
         this.character.stop();
+    }
+
+    public handleSizeChange(options: CharacterOptions): void {
+        this.character.setSize(options);
     }
 }

@@ -32,7 +32,7 @@ export class DirectionAnimation {
             return;
         }
 
-        const direction = this.animationConfig.direction.toLocaleLowerCase();
+        const direction = this.animationConfig.direction.toLowerCase();
 
         const allElements = this.container.querySelectorAll('[data-moving-area]');
 
@@ -97,13 +97,7 @@ export class DirectionAnimation {
             animation.cancel();
         });
         this.currentAnimations = [];
-
-        const allElements = this.container.querySelectorAll('[data-moving-area]');
-        allElements.forEach(element => {
-            if (element instanceof HTMLElement || element instanceof SVGElement) {
-                element.style.transform = '';
-            }
-        });
+        this.clearCurrentAnimation();
     }
 
     private clearCurrentAnimation(): void {

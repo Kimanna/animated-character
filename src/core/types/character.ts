@@ -11,9 +11,4 @@ export interface CharacterOptions {
 /**
  * 캐릭터의 표정을 나타내는 타입
  */
-export enum FaceExpression {
-    DEFAULT = 'default',
-    SMILE = 'smile',
-    SAD = 'sad',
-    WINK = 'wink'
-}
+export type FaceExpression = 'default' | 'smile' | 'sad' | 'wink';

@@ -1,115 +1,111 @@
 body {
   background-color: #000;
-}
-
-#svg-container {
-  width: 100px;
-  height: 100px;
-  margin-bottom: 10px;
-}
-
-.container {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   height: 100vh;
-}
-
-.character-container {
-  transform-style: preserve-3d;
-}
-
-.eyes-area,
-.eyeballs,
-.blusher,
-.mouth-area {
-  transform-origin: 50% 50% -200px;
-  transition-duration: 0.3s;
-}
-
-.hide {
-  visibility: hidden;
-}
-
-.show {
-  visibility: visible;
+  gap: 20px;
 }
 
 .expression-buttons, 
-.action-buttons,
-.direction-buttons {
+.direction-buttons,
+.control-buttons,
+.control-animation,
+.control-animation-config {
   display: flex;
   gap: 10px;
-  margin-top: 20px;
+  margin-top: 10px;
+  align-items: center;
 }
 
 .expression-buttons button, 
-.action-buttons button,
-.direction-buttons button {
+.direction-buttons button,
+.control-buttons button,
+.control-animation button,
+.control-animation-config button {
   padding: 8px 16px;
   border: none;
   border-radius: 4px;
   color: white;
   cursor: pointer;
   transition: background-color 0.3s;
+  font-size: 14px;
+  min-width: 100px;
 }
 
 .expression-buttons button {
   background-color: #F95428;
 }
 
-.action-buttons button {
-  background-color: #F7B239;
-}
-
 .direction-buttons button {
   background-color: #45a049;
+}
+
+.control-buttons button {
+  background-color: #2196F3;
+}
+
+.control-animation button {
+  background-color: #9C27B0;
 }
 
 .expression-buttons button:hover {
   background-color: #c04928;
 }
 
-.action-buttons button:hover {
-  background-color: #c48f34;
-}
-
 .direction-buttons button:hover {
   background-color: #2e7a32;
 }
 
-.up .eyes-area,
-.up .eyeballs,
-.up .blusher,
-.up .mouth-area {
-  transform: rotate3d(1, 0, 0, 30deg);
+.control-buttons button:hover {
+  background-color: #1976D2;
 }
 
-.down .eyes-area,
-.down .eyeballs,
-.down .blusher,
-.down .mouth-area {
-  transform: rotate3d(1, 0, 0, -30deg);
+.control-animation button:hover {
+  background-color: #7B1FA2;
 }
 
-.left .eyes-area,
-.left .eyeballs,
-.left .blusher,
-.left .mouth-area {
-  transform: rotate3d(0, 1, 0, -30deg);
+.control-animation-config {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
-.right .eyes-area,
-.right .eyeballs,
-.right .blusher,
-.right .mouth-area {
-  transform: rotate3d(0, 1, 0, 30deg);
+.control-animation-config input {
+  flex: 0 1 100px;
 }
 
-.front .eyes-area,
-.front .eyeballs,
-.front .blusher,
-.front .mouth-area {
-  transform: rotate3d(0, 0, 0, 0deg);
+.control-animation-config button {
+  flex: 0 1 auto;
+}
+
+.control-animation-config input {
+  padding: 8px 12px;
+  border: 2px solid #666;
+  border-radius: 4px;
+  background-color: #333;
+  color: white;
+  font-size: 14px;
+  width: 100px;
+  transition: border-color 0.3s;
+}
+
+.control-animation-config input:focus {
+  border-color: #2196F3;
+  outline: none;
+}
+
+.control-animation-config input::placeholder {
+  color: #888;
+}
+
+.control-animation-config button {
+  background-color: #FF9800;
+}
+
+.control-animation-config button:hover {
+  background-color: #F57C00;
 }

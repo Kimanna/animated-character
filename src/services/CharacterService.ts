@@ -1,5 +1,5 @@
 import { CharacterOptions } from '../core/types/character';
-import { DEFAULT_CHARACTER_SIZE } from '../core/constants/character';
+import { DEFAULT_CHARACTER_SIZE, EYE_EXPRESSIONS, MOUTH_EXPRESSIONS } from '../core/constants/character';
 
 export class CharacterService {
     private container: HTMLElement;
@@ -12,6 +12,8 @@ export class CharacterService {
         }
 
         this.container = container;
+        this.container.style.transformStyle = "preserve-3d";
+        
         this.characterSize = { 
             width: options?.width || DEFAULT_CHARACTER_SIZE.width, 
             height: options?.height || DEFAULT_CHARACTER_SIZE.height 
@@ -19,24 +21,36 @@ export class CharacterService {
     }
 
     public initialize(): void {
-        this.loadSVG();
+        const svg = this.createBaseSVG();
+        this.container.appendChild(svg);
         this.setSize();
     }
 
-    private loadSVG(): void {
-        const svg = this.createBaseSVG();
-        this.container.appendChild(svg);
+    private createBaseSVG(): SVGElement {
+        const svg = this.createSVGElement("svg", {
+            id: "character",
+            height: "100px",
+            width: "100px",
+            version: "1.1",
+            viewBox: "0 0 512 512",
+            xmlns: "http://www.w3.org/2000/svg",
+            "xmlns:xlink": "http://www.w3.org/1999/xlink"
+        });
+
+        const elements = [
+            this.createFace(),
+            this.createEyes(),
+            this.createEyeballs(),
+            this.createBlusher(),
+            this.createMouth()
+        ];
+
+        elements.forEach(element => svg.appendChild(element));
+        return svg;
     }
 
-    private createBaseSVG(): SVGElement {
-        const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        svg.setAttribute("id", "character");
-        svg.setAttribute("height", "100px");
-        svg.setAttribute("width", "100px");
-        svg.setAttribute("version", "1.1");
-        svg.setAttribute("viewBox", "0 0 512 512");
-        svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-        svg.setAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
+    private createFace(): DocumentFragment {
+        const fragment = document.createDocumentFragment();
 
         // 얼굴 컬러
         const faceColor = this.createSVGElement("circle", {
@@ -56,39 +70,32 @@ export class CharacterService {
             "stroke-width": "12"
         });
 
-        // 눈 영역
+        fragment.appendChild(faceColor);
+        fragment.appendChild(faceOutline);
+        return fragment;
+    }
+
+    private createEyes(): SVGElement {
         const eyesArea = this.createSVGElement("g", {
             class: "eyes-area",
-            "data-moving-area": "eyes"
+            "data-moving-area": "eyes-area"
         });
+        this.addMovingAreaStyle(eyesArea);
 
-        // 눈 표정 정의
-        const eyeExpressions = {
-            DEFAULT: [
-                { type: "circle", attrs: { cx: "363", cy: "250", r: "54", stroke: "black", "stroke-width": "12" } },
-                { type: "circle", attrs: { cx: "148", cy: "250", r: "54", stroke: "black", "stroke-width": "12" } }
-            ],
-            SMILE: "M94 250 Q148 190 202 250 M309 250 Q363 190 417 250",
-            SAD: "M94 250 Q148 270 202 250 M309 250 Q363 270 417 250",
-            WINK: "M94 250 Q148 190 202 250 M280 250 Q363 190 420 250 M280 250 Q350 140 420 200"
-        };
-
-        // 각 표정별 눈 추가
-        Object.entries(eyeExpressions).forEach(([expression, config]) => {
-            if (expression === 'DEFAULT') {
-                const defaultEyes = this.createExpressionGroup("eyes", expression, true);
-                (config as Array<{type: string, attrs: Record<string, string>}>).forEach(({ type, attrs }) => {
-                    defaultEyes.appendChild(this.createSVGElement(type, attrs));
-                });
-                eyesArea.appendChild(defaultEyes);
-            } else {
-                eyesArea.appendChild(this.createExpressionPath("eyes", expression, config as string));
-            }
+        const defaultEyes = this.createExpressionGroup("eyes");
+        EYE_EXPRESSIONS.default.forEach(({ type, attrs }) => {
+            defaultEyes.appendChild(this.createSVGElement(type, attrs));
         });
+        eyesArea.appendChild(defaultEyes);
 
-        // 눈동자
-        const eyeballs = this.createExpressionGroup("eyeballs", "DEFAULT", true);
+        return eyesArea;
+    }
+
+    private createEyeballs(): SVGElement {
+        const eyeballs = this.createExpressionGroup("eyeballs");
         eyeballs.setAttribute("data-moving-area", "eyeballs");
+        this.addMovingAreaStyle(eyeballs);
+
         ["363", "148"].forEach(cx => {
             eyeballs.appendChild(this.createSVGElement("circle", {
                 style: "fill:#FFFFFF",
@@ -98,11 +105,16 @@ export class CharacterService {
             }));
         });
 
-        // 볼터치
+        return eyeballs;
+    }
+
+    private createBlusher(): SVGElement {
         const blusher = this.createSVGElement("g", {
             class: "blusher",
             "data-moving-area": "blusher"
         });
+        this.addMovingAreaStyle(blusher);
+
         [{ cx: "100" }, { cx: "411" }].forEach(attrs => {
             blusher.appendChild(this.createSVGElement("circle", {
                 style: "fill:#F95428",
@@ -112,30 +124,23 @@ export class CharacterService {
             }));
         });
 
-        // 입 영역
+        return blusher;
+    }
+
+    private createMouth(): SVGElement {
         const mouthArea = this.createSVGElement("g", {
             class: "mouth-area",
-            "data-moving-area": "mouth"
+            "data-moving-area": "mouth-area"
         });
+        this.addMovingAreaStyle(mouthArea);
 
-        // 각 표정별 입 추가
-        const mouthExpressions = {
-            DEFAULT: "M216,318 C 216,348 256,348 256,318 C 256,348 296,348 296,318",
-            SMILE: "M216,318 C 216,380 296,380 296,318",
-            SAD: "M216,338 C 216,308 296,308 296,338",
-            WINK: "M216,318 C 216,348 296,348 296,318"
-        };
+        const defaultMouth = this.createExpressionPath(
+            "mouth", 
+            MOUTH_EXPRESSIONS.default
+        );
+        mouthArea.appendChild(defaultMouth);
 
-        Object.entries(mouthExpressions).forEach(([expression, path]) => {
-            mouthArea.appendChild(this.createExpressionPath("mouth", expression, path, 
-                expression === "DEFAULT"));
-        });
-
-        // SVG에 모든 요소 추가
-        [faceColor, faceOutline, eyesArea, eyeballs, blusher, mouthArea]
-            .forEach(element => svg.appendChild(element));
-
-        return svg;
+        return mouthArea;
     }
 
     private createSVGElement(type: string, attributes: Record<string, string> = {}): SVGElement {
@@ -146,15 +151,14 @@ export class CharacterService {
         return element;
     }
 
-    private createExpressionGroup(type: string, expression: string, show = false): SVGElement {
-        return this.createSVGElement("g", {
-            class: `${type} ${expression.toLowerCase()}-expression ${show ? 'show' : 'hide'}`,
-            "data-expression": expression
-        });
+    private createExpressionGroup(type: string): SVGElement {
+        const element = this.createSVGElement("g", {});
+        element.setAttribute("class", `${type}`);
+        return element;
     }
 
-    private createExpressionPath(type: string, expression: string, d: string, show = false): SVGElement {
-        const group = this.createExpressionGroup(type, expression, show);
+    private createExpressionPath(type: string, d: string): SVGElement {
+        const group = this.createExpressionGroup(type);
         const path = this.createSVGElement("path", {
             d,
             stroke: "black",
@@ -178,5 +182,20 @@ export class CharacterService {
             svg.setAttribute('height', `${height}px`);
             this.container.style.height = `${height}px`;
         }
+    }
+
+    private addMovingAreaStyle(element: SVGElement): void {
+        element.style.transformOrigin = '50% 50% -200px';
+        element.style.transitionDuration = '0.3s';
+    }
+
+    public updateCharacterSize(options: CharacterOptions): void {
+        if (options.width) {
+            this.characterSize.width = options.width;
+        }
+        if (options.height) {
+            this.characterSize.height = options.height;
+        }
+        this.setSize();
     }
 }
