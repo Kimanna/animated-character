@@ -1,4 +1,4 @@
-import { Character } from './index';
+import { Character } from "../src/index";
 
 const character = new Character('character-container', {
   width: 200,
@@ -10,7 +10,7 @@ character.handleAnimationChange("direction");
 character.handleFaceExpressionChange("default");
 
 const config = {
-  direction: "UP",
+  direction: "up",
   duration: 1000,
   repeat: 3,
   pause: 3000,
