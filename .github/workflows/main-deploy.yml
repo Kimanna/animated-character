@@ -1,5 +1,10 @@
 name: Main Deploy
 
+# 최상단에 permissions 추가
+permissions:
+  contents: write
+  packages: write
+
 on:
   push:
     branches: [ main ]
