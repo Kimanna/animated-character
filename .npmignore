@@ -1,0 +1,32 @@
+# Source and test files
+src/
+tests/
+coverage/
+
+# Config files
+.github/
+.gitignore
+vite.config.ts
+biome.json
+tsconfig.json
+tsconfig.node.json
+
+# Development files
+index.html
+public/
+example/
+
+# Test files
+**/*.test.ts
+**/*.spec.ts
+
+# Build process
+node_modules/
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log* 

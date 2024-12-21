@@ -4,8 +4,16 @@
   "description": "Animated character library with expressions and actions",
   "license": "MIT",
   "author": "Anna Kim",
-  "private": true,
+  "private": false,
   "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
