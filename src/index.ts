@@ -1,0 +1,1 @@
+export { CharacterController as Character } from './controllers/CharacterController';
