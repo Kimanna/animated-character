@@ -1,10 +1,21 @@
-import { defineConfig } from "vite";
+import { defineConfig } from 'vite'
+import { dirname, resolve } from 'path'
+import { fileURLToPath } from 'url'
+import dts from 'vite-plugin-dts'
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
 export default defineConfig({
-  server: {
-    port: 3000, // 개발 서버 포트
-  },
   build: {
-    outDir: 'dist',
+    lib: {
+      entry: resolve(__dirname, 'src/index.ts'),
+      formats: ['es']
+    }
   },
-});
+  plugins: [
+    dts({ 
+      insertTypesEntry: true,
+      include: ['src']
+    })
+  ]
+}) 

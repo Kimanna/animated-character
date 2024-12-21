@@ -7,9 +7,11 @@ coverage/
 .github/
 .gitignore
 vite.config.ts
+vite.config.js
 biome.json
 tsconfig.json
 tsconfig.node.json
+vitest.config.ts
 
 # Development files
 index.html
